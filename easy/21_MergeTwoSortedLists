@@ -1,0 +1,51 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void insertAtTail(ListNode* &tail,ListNode* node){
+        tail->next=node;
+        tail=node;
+    }
+    ListNode* mergeTwoLists(ListNode* head1, ListNode* head2) {
+        // Handling edge cases
+        if(!head1)return head2;
+        if(!head2)return head1;
+
+        ListNode* dummy=new ListNode(-101);
+        ListNode* tail=dummy;
+        ListNode* traverse1=head1;
+        ListNode* traverse2=head2;
+
+        // Simply traversing and pushing at tail
+        while(traverse1!=nullptr && traverse2!=nullptr){
+            if(traverse1->val<=traverse2->val){
+                insertAtTail(tail,traverse1);
+                traverse1=traverse1->next;
+            }
+            else{
+                insertAtTail(tail,traverse2);
+                traverse2=traverse2->next;
+            }
+        }
+
+        // Loops for remaining elements
+        while(traverse1){
+            insertAtTail(tail,traverse1);
+            traverse1=traverse1->next;
+        }
+        while(traverse2){
+            insertAtTail(tail,traverse2);
+            traverse2=traverse2->next;
+        }
+        // return the list
+        return dummy->next;
+    }
+};
