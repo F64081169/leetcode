@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int lastStoneWeight(vector<int>& stones) {
+        int y = *max_element(stones.begin(),stones.end());
+        int x;
+        int y_index;
+        while(1){
+            y = *max_element(stones.begin(),stones.end());
+            int y_index = max_element(stones.begin(),stones.end()) - stones.begin();
+            stones[y_index] = 0;
+            x = *max_element(stones.begin(),stones.end());
+            int x_index = max_element(stones.begin(),stones.end()) - stones.begin();
+            stones[x_index] = 0;
+            stones[y_index] = y-x;
+            if(!x){ // only has one maximum value y
+                return y;
+            }
+        }
+        return 0;
+    }
+};
+
+/*
+ // In each iteration, find every maximum and second maximum values 
+    and update to new values in each index. x->0,y->(y-x) ,when x<=y.
+
+        int y = *max_element(stones.begin(),stones.end());
+        int y_index = max_element(stones.begin(),stones.end()) - stones.begin();
+        stones[y_index] = 0;
+        int x = *max_element(stones.begin(),stones.end());
+        int x_index = max_element(stones.begin(),stones.end()) - stones.begin();
+        stones[x_index] = 0;
+        stones[y_index] = y-x;
+*/
