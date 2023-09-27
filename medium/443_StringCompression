@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        vector<char> rechord;
+        char tmp;
+        int count = 0;  
+        for(int i = 0; i < chars.size(); i++){           
+            if(i == 0 || chars[i] != tmp){
+                if(count > 1){
+                    string countStr = to_string(count);
+                    for (char c : countStr) {
+                        rechord.push_back(c);
+                    }
+                }
+                count = 1; 
+                tmp = chars[i];
+                rechord.push_back(tmp);
+            } else {
+                count++;
+            }
+        }
+        if(count > 1){
+            string countStr = to_string(count);
+            for (char c : countStr) {
+                rechord.push_back(c);
+            }
+        }
+
+        chars = rechord;
+        return rechord.size();
+    }
+};
