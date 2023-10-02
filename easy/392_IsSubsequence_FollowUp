@@ -1,0 +1,38 @@
+/*
+Follow up: Suppose there are lots of incoming s, say s1, s2, ..., sk where k >= 109, 
+and you want to check one by one to see if t has its subsequence. In this scenario, 
+how would you change your code?
+
+Building a map, scan each si, maybe this solution is not correct.
+*/
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        unordered_map<char, vector<int>> charPositions;
+        
+        // Build a map that stores the positions of each character in t
+        for (int i = 0; i < t.length(); i++) {
+            charPositions[t[i]].push_back(i);
+        }
+        
+        int currentPosition = -1;
+        
+        // Check if s is a subsequence of t
+        for (char c : s) {
+            if (charPositions.find(c) == charPositions.end()) {
+                return false; // Character not found in t
+            }
+            
+            vector<int>& positions = charPositions[c];
+            auto it = upper_bound(positions.begin(), positions.end(), currentPosition);
+            
+            if (it == positions.end()) {
+                return false; // No valid position for the character in t
+            }
+            
+            currentPosition = *it;
+        }
+        
+        return true;
+    }
+};
