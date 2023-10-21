@@ -1,0 +1,14 @@
+// Hint : 費式數列，但我實際在GPE沒有過全部測資為什麼
+class Solution {
+public:
+    int climbStairs(int n) {
+        int stair[46];
+        stair[0] = 1;
+        stair[1] = 1;
+        for(int i = 2;i<46;i++){
+            stair[i] = stair[i-1] + stair[i-2];
+        }
+
+        return stair[n];
+    }
+};
