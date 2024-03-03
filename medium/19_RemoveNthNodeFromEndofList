@@ -1,0 +1,39 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode* fast = &dummy;
+        ListNode* slow = &dummy;
+
+        // 讓快指針先向前移動 n+1 步
+        for(int i = 0; i < n + 1; ++i) {
+            if(!fast) return nullptr; // 處理當鍊表的節點個數小於等於 n 的情況
+            fast = fast->next;
+        }
+
+        // 同時移動快慢指針，直到快指針到達鍊表尾部
+        while(fast) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        // 此時慢指針的下一個節點就是待刪除的節點
+        ListNode* toDelete = slow->next;
+        slow->next = slow->next->next;
+
+        delete toDelete; // 釋放內存
+
+        return dummy.next; // 返回虛擬節點的下一個節點，即新的鍊表頭
+    }
+};
